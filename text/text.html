@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id='btn1'>btn1</button>
+    <button id='btn2'>更改密码</button>
+    <button id="btn3">获取所有菜品</button>
+    <h3>上传文件</h3>
+    <form action="http://127.0.0.1:8090/admin/dish/image"
+    method="POST"
+    enctype="multipart/form-data">
+        <input type="file" name="dishImg"><br>
+        <input type="text" name="description">
+        <input type="submit">
+    </form>
+    <hr>
+    <input type="file" id="inputFile">
+    <input type="text" id="desc">
+    <button id="btn4" type="button" >tijiao</button>
+    <hr>
+    <button id="btn5">添加菜品</button>
+    <button id="btn6">删除菜品</button>
+    <script src='./axios.min.js'></script>
+    <script>
+        btn1.onclick = function () {
+            axios.get('http://127.0.0.1:8090/admin/admin/login/admin/123456').then((res) => {
+                if (res.status === 200) {
+                    console.log(res.data)
+                }
+            })
+        }
+        btn2.onclick = function () {
+            var data = {
+                aname: 'admin',
+                oldPwd: '654321',
+                newPwd: '123456'
+            }
+            axios.patch('http://127.0.0.1:8090/admin/admin', data).then((res) => {
+                if(res.status == 200) {
+                    console.log(res.data)
+                }
+            })
+        }
+        btn3.onclick =function () {
+            axios.get('http://127.0.0.1:8090/admin/dish').then((res) => {
+                if (res.status === 200) {
+                    console.log(res.data)
+                }
+            })
+        }
+        btn4.onclick = function () {
+            var data = new FormData();
+            data.append('description', desc.value);
+            data.append('dishImg', inputFile.files[0])
+            axios.post('http://127.0.0.1:8090/admin/dish/image', data, (req, res) => {
+                if (err) throw err;
+                alert(JSON.stringify(res.data))
+            })
+        }
+        btn5.onclick = function () {
+            var data = {
+                title: '小烧饼',
+                imgUrl: '45646546.jpg',
+                price: 22,
+                detail: '小烧饼',
+                categoryId: 3
+            }
+            axios.post('http://127.0.0.1:8090/admin/dish', data).then((res) => {
+                console.log(res.data)
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+        btn6.onclick = function () {
+            axios.delete('http://127.0.0.1:8090/admin/dish/50').then((res) => {
+                console.log(res.data)
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    </script>
+</body>
+</html>
