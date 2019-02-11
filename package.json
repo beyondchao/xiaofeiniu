@@ -1,7 +1,9 @@
 {
   "name": "xiaofeiniu",
   "version": "1.0.0",
-  "node": "v8.11.2",
+  "engines": {
+    "node": "8.11.2"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
