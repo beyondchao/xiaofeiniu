@@ -14,7 +14,7 @@ var pool = mysql.createPool({
     port     : process.env.MYSQL_PORT,
     user     : process.env.ACCESSKEY,
     password : process.env.SECRETKEY,
-    database : 'app_' + process.env.app_xiaofeiniu,
+    database : 'app_' + process.env.APPNAME,
 	connectionLimit: 3
 });
 module.exports = pool;
