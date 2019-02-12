@@ -21,3 +21,45 @@ router.get('/', (req, res)=>{
     res.send(result);
   })
 })
+
+/*
+*根据tid获取预定信息
+*GET /admin/table/reservation
+*/
+router.get('/reservation/:tid', (req, res) => {
+  var tid = req.params.tid
+  //console.log(tid)
+      pool.query('SELECT * FROM xfn_reservation WHERE tableId=?', [tid], (err, result) => {
+    if (err) throw err
+    res.send(result) 
+  })
+})
+
+/*
+*根据tid获取占用信息
+*get /admin/table/order
+*/
+
+
+/*
+添加桌台 post /admin/table/add
+*/ 
+router.post('/add', (req, res) => {
+  var data = req.body
+  pool.query('INSERT INTO xfn_table set ?', data, (err, result) => {
+    if (err) throw err
+    res.send({code: 200, msg: 'insert success'})
+  })
+})
+
+/*
+删除指定编号的桌台
+delete /admin/table
+*/
+router.delete('/', (req, res) => {
+  var tid = req.body.tid
+  pool.query('DELETE FROM xfn_table WHERE tid=?', [tid], (err, result) => {
+    if (err) throw err
+    res.send({code: 200, msg: 'delete sucess'})
+  })
+})
