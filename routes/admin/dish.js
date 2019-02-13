@@ -95,7 +95,30 @@ router.post('/', (req, res)=>{
 *   {code:200, msg:'dish deleted succ'}
 *   {code:400, msg:'dish not exists'}
 */
+router.delete('/:did', (req, res) => {
+  pool.query('DELETE FROM xfn_dish WHERE did=?', req.params.did, (err, result) => {
+    if (err) throw err
+    if (result.affectedRows > 0) {
+      res.send({code: 200, msg: 'dish deleted succ'})
+    } else {
+      res.send({code: 400, msg: 'dish not exists'})
+    }
+  })
+})
 
+/*
+*根据菜品名称删除菜品
+*/
+router.delete('/byName/:dishName', (req, res) => {
+  pool.query('DELETE FROM xfn_dish WHERE title=?', req.params.dishName, (err, result) => {
+    if (err) throw err
+    if (result.affectedRows > 0) {
+      res.send({code: 200, msg: 'dish deleted succ'})
+    } else {
+      res.send({code: 400, msg: 'dish not exists'})
+    }
+  })
+})
 
 
 /*

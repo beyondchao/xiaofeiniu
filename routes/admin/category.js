@@ -16,8 +16,7 @@ module.exports = router;
 router.get('/', (req, res) => {
   pool.query('SELECT * FROM xfn_category ORDER BY cid', (err, result) => {
     if (err) throw err;
-    var jsonData = JSON.stringify(result);
-    res.send('doData(' + jsonData + ')');
+    res.send(result)
   })
 })
 
@@ -31,6 +30,7 @@ router.get('/', (req, res) => {
 */
 router.delete('/:cid', (req, res) => {
   //注意：删除菜品类别前必须先把属于该类别的菜品的类别编号设置为NULL
+  console.log('编号'+req.params.cid)
   pool.query('UPDATE xfn_dish SET categoryId=NULL WHERE categoryId=?', req.params.cid, (err, result) => {
     if (err) throw err;
     //至此指定类别的菜品已经修改完毕
